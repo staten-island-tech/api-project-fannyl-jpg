@@ -22,4 +22,6 @@ document.querySelector("#app").innerHTML = `
 
 setupCounter(document.querySelector("#counter"));
 
-const URL = "https:";
+const URL = "https://foodish-api.herokuapp.com/api/dessert";
+
+async function getData(URL) {}
