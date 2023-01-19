@@ -23,9 +23,9 @@ import { setupCounter } from './counter.js' */
 
 /* setupCounter(document.querySelector("#counter")); */
 
-const URL = "https://api.artic.edu/api/v1/artworks/search?q=cats";
-
-async function getData(URL) {
+/* const URL = "https://api.artic.edu/api/v1/artworks/search?q=cats";
+ */
+/* async function getData(URL) {
   try {
     const response = await fetch(URL);
     if (response.status < 200 || response.status > 299) {
@@ -37,4 +37,32 @@ async function getData(URL) {
     console.error(error);
   }
 }
-getData(URL);
+getData(URL); */
+
+const URL = "https://api.artic.edu/api/v1/artworks/search?q=cats";
+console.log(fetch(URL));
+
+fetch(URL)
+  .then((response) => response.json()) // use the `.json()` method
+  .then((data) => console.log(data)); // `.json()` is also async, chain another `.then()` to log the object
+
+// let's turn this to an async/await function
+async function fetchData(URL) {
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+fetchData(URL);
+
+const apiResponseDOM = document.getElementById("api-response");
+const putQuoteInHTML = async () => {
+  // defining an async arrow function
+  const quote = await fetchData(URL);
+  apiResponseDOM.innerHTML = `Quote: ${quote.content}`;
+};
+putQuoteInHTML();
