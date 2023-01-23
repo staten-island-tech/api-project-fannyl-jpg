@@ -47,7 +47,7 @@ fetch(URL)
   .then((data) => console.log(data)); // `.json()` is also async, chain another `.then()` to log the object
 
 // let's turn this to an async/await function
-async function fetchData(URL) {
+async function fetchData("https://api.artic.edu/api/v1/artworks/search?q=cats") {
   try {
     const response = await fetch(URL);
     const data = await response.json();
