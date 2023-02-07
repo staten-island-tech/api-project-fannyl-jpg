@@ -1,0 +1,33 @@
+body{
+	background-color: teal;
+}
+
+#result{
+	width: 800px;
+    margin: 2em 0em 0em 15.6em;	
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.card{
+	background-color: initial;
+	color: black;
+	flex: 230px;
+	margin: 0 16px 26px;
+}
+.searchInput{
+	background-color: initial;
+}
+
+.btn-primary{
+	color: black;
+    background-color: beige;
+    border-color: black;
+}
+
+#searchResult{
+	width: 800px;
+    margin: 2em 0em 0em 15.6em;	
+	display: flex;
+	flex-wrap: wrap;
+}
