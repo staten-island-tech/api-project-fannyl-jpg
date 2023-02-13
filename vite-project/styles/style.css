@@ -1,33 +1,290 @@
-body{
-	background-color: teal;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* <---------------CSS RESET----------------> */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1e1e1e;
 }
 
-#result{
-	width: 800px;
-    margin: 2em 0em 0em 15.6em;	
-	display: flex;
-	flex-wrap: wrap;
+/* Designing the navbar with the logo text. */
+.navbar {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  border-bottom: 0.15em solid #e50914;
 }
 
-.card{
-	background-color: initial;
-	color: black;
-	flex: 230px;
-	margin: 0 16px 26px;
-}
-.searchInput{
-	background-color: initial;
-}
-
-.btn-primary{
-	color: black;
-    background-color: beige;
-    border-color: black;
+/* Logo Text */
+.title {
+  font-family: 'Bebas Neue';
+  color: #e50914;
+  font-size: 3em;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
-#searchResult{
-	width: 800px;
-    margin: 2em 0em 0em 15.6em;	
-	display: flex;
-	flex-wrap: wrap;
+/* The div which has the form. Mainly for size and positioning. */
+.search-bar {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-family: 'Helvetica';
+  margin-top: 2.5em;
+  margin-bottom: 2em;
+  width: 100%;
+}
+
+/* The search form with input and button */
+.search-form {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The search input. */
+#search {
+  width: 40em;
+  height: 2.5em;
+  margin-left:25px;
+  border-radius: 50px;
+  /* Padding left so that the search input has a gap from the left. */
+  padding-left: 0.8em;
+  font-size: 20px;
+  font-weight: 100;
+  background-color: #6b6b6b;
+  color: white;
+  box-shadow: inset 1px 1px 15px 2px rgb(55, 55, 55);
+  outline: none;
+  border: none;
+}
+
+/* Placeholder for the input */
+.search-form input::placeholder {
+  color: #b0b0b0;
+  font-weight: 200;
+  text-transform: capitalize;
+  word-spacing: 2px;
+}
+
+/* The search button */
+.search-form button {
+  font-size: 24px;
+  height: 50px;
+  width: 50px;
+  padding: 16px;
+  background-color: #e50914;
+  color: white;
+  border-radius: 50px;
+  position: relative;
+  top: 0px;
+  left: -52px;
+  outline: none;
+  border: none;
+  font-weight: bold;
+}
+
+/* The icon in the button. This is because the image is a little out of position. */
+#search-icon {
+  position: relative;
+  top: -4px;
+  left: -3px;
+}
+
+/* Desinging the result area */
+
+/* Top Results heading */
+.result-heading {
+  font-family: 'Helvetica';
+  color: white;
+  font-size: 26px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
+
+/* Search results container */
+.result-container {
+  display: flex;
+  max-width: 100vw;
+  width: 100%;
+  padding: 25px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Each image-result is a single item for each search. */
+.image-result {
+  margin: 10px;
+  overflow: hidden;
+  width: 210px;
+  height: 295px;
+}
+.image-result img {
+  display: block;
+  border-radius: 10px;
+  width: 100%;
+}
+
+/* The overlay for the images when we hover. */
+.overlay {
+  font-family: 'Helvetica';
+  color: white;
+  font-size: 24px;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Flex display */
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* Gradient and filter */
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)) rgba(87, 87, 87, 0.2);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 10px;
+  position: relative;
+  top: -295px;
+  width: 210px;
+  height: 295px;
+
+  /* Opacity changes to 1 on hover */
+  opacity: 0;
+  transition: 0.4s ease;
+}
+
+/* All children elements in the overlay div. It has the title and rating. 
+They are displaced from their position and go back to their original position
+ when hovered. */
+.overlay > * {
+  transform: translateY(180px);
+  transition: transform 0.35s ease;
+}
+.overlay:hover > * {
+  transform: translateY(0px);
+  transition: transform 0.5s ease;
+}
+
+/* The name and rating become visible on hover. */
+.overlay:hover {
+  opacity: 1;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* The name of the show .*/
+.overlay-title {
+  position: relative;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+/* The rating of the show. */
+.overlay-rating {
+  position: relative;
+  font-size: 22px;
+  font-weight: 100;
+  margin-top: 10px;
+  color: #d0d0d0;
 }
