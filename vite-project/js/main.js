@@ -1,4 +1,5 @@
-import "./styles/style.css";
+import "../styles/style.css";
+import { counter } from "../js/counter.js";
 
 const apiEntry = " https://api.tvmaze.com/shows/1";
 console.log(fetch(apiEntry));
