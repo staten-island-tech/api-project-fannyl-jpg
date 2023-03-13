@@ -1,97 +1,163 @@
-const form = document.querySelector('.search-form');
-const imageResults = document.querySelector('.image-container');
+let search_data; 
+let search_results = document.querySelector("#search_results");
+const search_input = document.querySelector('#search_input');
+const baseURL = "https://api.tvmaze.com/search/shows?q=";
 
-const apiEntry = "https://api.tvmaze.com/search/shows";
+async function getData(url) {
+    await fetch(url)
+    .then(response => response.json())
+    .then(data => {
+    search_data = data;
+    })
+    .catch(e => {
+        console.log('Something was wrong');
+        console.log(e);
+    });
+}
 
-console.log(fetch(apiEntry));
+async function handleSearchInput(e) {
+  if (e.key == "Enter") {
+      e.preventDefault();
+      let search_value = search_input.value.replaceAll(' ', '+');
+      let searchURL = baseURL + search_value;
+      
+      try {
+          await getData(searchURL);
+          SearchResults(search_data);
+      } catch(e) {
+          console.log(e);
+          search_results.appendChild(DisplayError());
+      }
 
-fetch(apiEntry)
-    .then((response) => response.json()) 
-    .then((data) => console.log(data)); 
+      search_input.value = '';
 
-async function fetchData(apiEntry) {
+  }
+}
+
+function DisplayError() {
+    const error_div = document.createElement('div');
+    error_div.classList = ['error'];
+    const error_message = document.createElement('p');
+    const error_text = document.createTextNode('Something went wrong with your search...');
+    error_message.appendChild(error_text);
+    error_div.appendChild(error_message);
+
+    return error_div;
+}
+
+search_input.addEventListener('keypress', handleSearchInput);
+
+function Title(data) {
+    const title = document.createElement('div');
+    title.classList = ['title'];
+
+    const show_title = document.createElement('h2');
+    const show_title_text = document.createTextNode(data.name);
+    show_title.appendChild(show_title_text);
+
+    const rating = document.createElement('p');
+    let rating_text;
+    if(data.rating.average == null) {
+        rating_text = document.createTextNode("No Rating");
+    } else {
+        rating_text = document.createTextNode(`Rating: ${data.rating.average}`);
+    }
+    rating.appendChild(rating_text);
+
+    const genres = document.createElement('p');
+    let genres_text;
+    if(data.genres.length > 0) {
+        genres_text = document.createTextNode(`Genres: ${data.genres.join(', ')}`);
+    } else {
+        genres_text = document.createTextNode("No genres listed");
+    }
+    genres.appendChild(genres_text);
+
+    title.appendChild(show_title);
+    title.appendChild(rating);
+    title.appendChild(genres);
+
+    return title
+}
+
+function Description(summary_data) {
+    const description = document.createElement('div');
+    description.classList = ['description']
+
+    const summary = document.createElement('p');
+    let formatted_summary;
+    if (summary_data == null) {
+        formatted_summary = "No Description Available";
+    } else {
+        formatted_summary = summary_data.replaceAll(/<p>|<\/p>|<b>|<\/b>/g, '');
+    }
+
+    const summary_text = document.createTextNode(formatted_summary);
+    summary.appendChild(summary_text);
+
+    description.appendChild(summary);
+
+    return description;
+}
+
+function Info(data) {
+    const info = document.createElement('div');
+    info.classList = ['info'];
+    
+    info.appendChild(Title(data));
+    info.appendChild(Description(data.summary));
+
+    return info;
+}
+
+function Poster(img) {
+    const poster = document.createElement('div');
+    poster.classList = ['poster'];
+    const poster_img = document.createElement('img');
+    
     try {
-        const response = await fetch(apiEntry);
-        const data = await response.json();
-        console.log(data);
-        return data;
-    } catch (err) {
-        console.error(err);
+        poster_img.src = img.medium;
+    } catch(e) {
+        poster_img.src = '#';
+    }
+
+    poster.appendChild(poster_img);
+
+    return poster;
+}
+
+function Result(show) {
+    const result = document.createElement('section');
+    result.classList = ['result'];
+
+    result.appendChild(Poster(show.image));
+    result.appendChild(Info(show));
+
+    return result;
+}
+
+function NoResults() {
+    const no_results = document.createElement('section');
+    const no_results_message = document.createElement('p')
+    const no_results_text = document.createTextNode('No results found...');
+    no_results_message.appendChild(no_results_text);
+    no_results.appendChild(no_results_message);
+    return no_results;
+}
+
+function SearchResults(data) {
+    search_results.innerHTML = "";
+    search_results
+    if (data.length > 0) {
+        const results = data.map((d) => {
+            return Result(d.show);
+        });
+    
+        results.forEach((res) => {
+            search_results.appendChild(res);
+        });   
+    } else {
+        search_results.appendChild(NoResults());
     }
 }
-fetchData(apiEntry);
 
-const apiResponseDOM = document.getElementById("api-response");
-const putMovieInHTML = async () => {
-    const movie = await fetchData(apiEntry);
-    apiResponseDOM.innerHTML = `Movie: ${movie.content}`;
-};
-putMovieInHTML();
-
-form.addEventListener('submit', async function (e) {
-  e.preventDefault();
-const searchTerm = form.elements.query.value;
-const config = { params: { q: searchTerm } };
-const res = await axios.get(' https://api.tvmaze.com/search/shows', config);
-addImages(res.data);
-
-  if (searchTerm === '') {
-    const heading = document.createElement('div');
-    const headingText = document.createElement('p');
-    headingText.innerText = 'No Results Found';
-    heading.append(headingText);
-    heading.classList.add('result-heading');
-    imageResults.append(heading);
-  }
-});
-
-const addImages = (shows) => {
-  imageResults.innerHTML = '';
-
-  const heading = document.createElement('div');
-  const headingText = document.createElement('p');
-  headingText.innerText = 'Top Results';
-  heading.append(headingText);
-  heading.classList.add('result-heading');
-  imageResults.append(heading);
-
-  const resultContainer = document.createElement('div');
-  resultContainer.classList.add('result-container');
-
-  for (let result of shows) {
-    if (result.show.image) {
-      const imageDiv = document.createElement('div');
-      imageDiv.classList.add('image-result');
-      const image = document.createElement('img');
-      image.src = result.show.image.medium;
-
-      const overlayDiv = document.createElement('div');
-      overlayDiv.classList.add('overlay');
-
-      const overlayTitleDiv = document.createElement('div');
-      overlayTitleDiv.classList.add('overlay-title');
-      const title = document.createElement('p');
-      title.innerText = result.show.name;
-
-      overlayTitleDiv.append(title);
-      overlayDiv.append(overlayTitleDiv);
-
-      const overlayRatingDiv = document.createElement('div');
-      overlayRatingDiv.classList.add('overlay-rating');
-      const rating = document.createElement('p');
-      overlayRatingDiv.appendChild(rating);
-
-      if (result.show.rating.average === null) {
-        rating.innerText = `Not Rated Yet`;
-      } else {
-        rating.innerText = `Rating: ${result.show.rating.average}`;
-      }
-      overlayDiv.append(overlayRatingDiv);
-      imageDiv.append(image);
-      imageDiv.append(overlayDiv);
-      resultContainer.append(imageDiv);
-    }
-
-    imageResults.append(resultContainer);
-  }
-};

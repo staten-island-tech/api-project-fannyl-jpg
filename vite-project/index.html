@@ -1,72 +1,33 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movies Search</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TV Shows</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@800&family=Karla:wght@800&family=Viga&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="navbar-title">
-      <p class="title">Movies</p>
-    </div>
-  </nav>
-  <div class="search-bar">
-    <form action="" class="search-form">
-      <input type="text" name="query" id="search" placeholder="Search for Series or TV Shows" />
-      <button><ion-icon id="search-icon" name="search-sharp"></button>
-    </form>
-  </div>
-  <div class="image-container">
-    <div class="result-heading">
-      <p>Top Results</p>
-    </div>
-    <div class="result-container">
-      <div class="image-result">
-        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/433/1082578.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-title">
-            <p>Daredevil</p>
-          </div>
-          <div class="overlay-rating">
-            <p>Rating: 8.5</p>
-          </div>
-        </div>
-      </div>
-      <div class="image-result">
-        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/171/429391.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-title">
-            <p>Wednesday</p>
-          </div>
-          <div class="overlay-rating">
-            <p>Rating: 8.7</p>
-          </div>
-        </div>
-      </div>
-      <div class="image-result">
-        <img src="https://static.tvmaze.com/uploads/images/medium_portrait/396/991288.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-title">
-            <p>Stranger Things</p>
-          </div>
-          <div class="overlay-rating">
-            <p>Rating: 8.5</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script src="main.js"></script>
+  <header>
+    <h1>TV Shows</h1>
+  </header>
+
+  <section class="container">
+    <section id="search_area">
+      <form action="">
+        <label for="search_input" class="sr-only">Search</label>
+        <input type="text" placeholder="Search TV Shows..." id="search_input"></input>
+      </form>
+    </section>
+
+    <section id="search_results"></section>
+    <script src="main.js"></script>
+    </script>
 </body>
 
 </html>
