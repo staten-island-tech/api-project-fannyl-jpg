@@ -1,3 +1,6 @@
+import './style.css'
+import { setupCounter } from './counter.js'
+
 let search_data; 
 let search_results = document.querySelector("#search_results");
 const search_input = document.querySelector('#search_input');
@@ -160,4 +163,6 @@ function SearchResults(data) {
         search_results.appendChild(NoResults());
     }
 }
+
+
 
